@@ -1,0 +1,251 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #e0f2fe;
+  color: #1a1a1a;
+}
+
+.main-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.header-title { text-align: center; margin-bottom: 30px; }
+.header-title h1 { margin: 0; font-size: 32px; color: #1e3a8a; }
+.subtitle { color: #475569; margin-top: 5px; }
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .layout-grid { grid-template-columns: 1fr; }
+}
+
+/* FORM STYLES */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.form-row { display: flex; flex-direction: column; margin-bottom: 12px; }
+.form-row label { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.form-row input, .form-row textarea {
+  padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit;
+}
+
+.form-actions { display: flex; gap: 8px; margin-top: 15px; }
+button {
+  cursor: pointer; border: none; border-radius: 6px; padding: 10px 16px;
+  font-size: 14px; font-weight: 600; transition: 0.2s;
+}
+.btn-primary { background: #10b981; color: #fff; flex: 1; }
+.btn-primary:hover { background: #059669; }
+.btn-secondary { background: #e5e7eb; color: #1a1a1a; }
+
+/* TREE SCENE */
+.tree-scene {
+  position: relative;
+  background: #bae6fd;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 500px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+.tree-graphic {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: auto;
+  z-index: 3;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+  pointer-events: none; /* Gambar pohon tidak menghalangi kursor mouse */
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-50%) translateY(-2px) rotate(-2deg); }
+  20%, 80% { transform: translateX(-50%) translateY(2px) rotate(2deg); }
+  30%, 50%, 70% { transform: translateX(-50%) translateY(-3px) rotate(-3deg); }
+  40%, 60% { transform: translateX(-50%) translateY(3px) rotate(3deg); }
+}
+
+/* AREA TANAH UNTUK FISIKA */
+.physics-canvas {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: #86efac; /* Warna rumput hijau */
+  /* border-top: 4px solid #4ade80; */
+  z-index: 2;
+}
+
+/* Elemen Apel */
+.apple {
+  position: absolute;
+  font-size: 40px;
+  cursor: grab;
+  user-select: none;
+  transform-origin: center;
+  line-height: 1;
+  z-index: 10;
+}
+
+.apple:active {
+  cursor: grabbing;
+}
+
+/* MODAL / POPUP STYLES */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #fff; width: 90%; max-width: 400px;
+  border-radius: 16px; padding: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+.modal-header h2 { margin: 0; font-size: 18px; color: #334155; }
+.close-btn { background: none; font-size: 24px; color: #94a3b8; padding: 0; }
+.close-btn:hover { color: #ef4444; }
+
+.modal-body { text-align: center; padding: 20px 0; }
+.apple-icon-large { font-size: 64px; margin-bottom: 10px; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+.modal-body h3 { margin: 0 0 8px 0; font-size: 22px; color: #0f172a; }
+.modal-desc { color: #64748b; font-size: 14px; margin-bottom: 16px; }
+.modal-price { font-size: 20px; font-weight: bold; color: #10b981; background: #ecfdf5; padding: 8px 16px; border-radius: 8px; display: inline-block; }
+
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #e2e8f0; padding-top: 16px; }
+.btn-edit { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.btn-edit:hover { background: #dbeafe; }
+.btn-danger { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.btn-danger:hover { background: #fee2e2; }
+
+/* ... (biarkan CSS sebelumnya tetap ada) ... */
+
+/* TABLE STYLES (Tambahkan di paling bawah) */
+.table-container {
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.table-container h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-table-edit, .btn-table-danger {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.btn-table-edit {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+.btn-table-edit:hover { background: #dbeafe; }
+
+.btn-table-danger {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+.btn-table-danger:hover { background: #fee2e2; }
+
+.empty-table {
+  text-align: center;
+  color: #94a3b8;
+  padding: 32px;
+  font-style: italic;
+}
+
+/* AREA TANAH UNTUK FISIKA */
+.physics-canvas {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  /* background: #86efac; <-- HAPUS ATAU KOMENTARI BARIS INI */
+  /* border-top: 4px solid #4ade80; */
+  z-index: 2;
+}
+
+.tree-scene {
+  position: relative;
+  /* background: #bae6fd; <-- HAPUS ATAU KOMENTARI BARIS INI */
+  border-radius: 12px;
+  overflow: hidden;
+  height: 465px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
