@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getPool } from '@/lib/db';
 
-// GET /api/products -> list all products
 export async function GET() {
   try {
     const pool = getPool();
+    // Mengambil data dari tabel tabungan
     const [rows] = await pool.query(
-      'SELECT id, name, description, price, created_at FROM products ORDER BY id DESC'
+      'SELECT id, nominal, `desc`, tanggal FROM tabungan ORDER BY tanggal DESC, id DESC'
     );
     return NextResponse.json(rows);
   } catch (error) {
@@ -15,27 +15,26 @@ export async function GET() {
   }
 }
 
-// POST /api/products -> create a new product
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, description, price } = body;
+    const { nominal, desc, tanggal } = body;
 
-    if (!name || price === undefined || price === '') {
+    if (!nominal || !tanggal) {
       return NextResponse.json(
-        { error: 'Field "name" and "price" wajib diisi' },
+        { error: 'Field "nominal" dan "tanggal" wajib diisi' },
         { status: 400 }
       );
     }
 
     const pool = getPool();
     const [result] = await pool.query(
-      'INSERT INTO products (name, description, price) VALUES (?, ?, ?)',
-      [name, description || null, price]
+      'INSERT INTO tabungan (nominal, `desc`, tanggal) VALUES (?, ?, ?)',
+      [nominal, desc || null, tanggal]
     );
 
     return NextResponse.json(
-      { id: result.insertId, name, description, price },
+      { id: result.insertId, nominal, desc, tanggal },
       { status: 201 }
     );
   } catch (error) {
